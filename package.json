@@ -1,0 +1,20 @@
+{
+  "name": "react-native-fields-form",
+  "version": "1.0.1",
+  "description": "react native render fields form",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "https://github.com/nguyenphi990/react-native-fields-form.git",
+  "keywords": [
+    "react-native-fields-form"
+  ],
+  "author": "phi@classfunc.com",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "metro-react-native-babel-preset": "^0.57.0"
+  }
+}
