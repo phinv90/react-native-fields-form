@@ -1,6 +1,6 @@
 {
   "name": "react-native-fields-form",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "react native render fields form",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "author": "phi@classfunc.com",
   "license": "MIT",
   "dependencies": {
+    "react-native-multiple-select": "^0.5.5"
   },
   "devDependencies": {
     "metro-react-native-babel-preset": "^0.57.0"

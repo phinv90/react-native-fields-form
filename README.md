@@ -28,15 +28,9 @@ renderFields(settings, methods)
 > các methods của useForm // xem ví dụ bên dưới
 
 ```jsx
-import React, {useEffect, useState} from 'react';
-import {Text, View, Button, StyleSheet} from "react-native"
-import useForm from 'react-hook-form'
-import {renderFields} from "react-native-fields-form";
-import * as yup from 'yup'
-
 export default function App() {
-
     const [data, setData] = useState(null)
+
     const validator = yup.object().shape({
         name: yup.string()
             .required("bắt buộc nhập ")
@@ -44,36 +38,50 @@ export default function App() {
         diachi: yup
             .string()
             .required(),
-        phone: yup.number()
+        // phone: yup.number()
+            // .required()
+            // .min(9),
+        male: yup.string()
+            .required(),
+        sothich:yup
+            .array()
             .required()
-            .min(9)
 
     })
-    const defaultValues = {
+    const dataProps = {
         email:"phi@classfunc.com",
         name:"phi nguyen",
-        diachi:"HCM",
-        vietnam:false,
-        male:"nam"
+        // diachi:"HCM",
+        vietnam:true,
+        // male:"nam",
+        sothich:[{id:"1",value:'code'}]
     }
 
 
     const medthods = useForm({
         validationSchema: validator,
-        defaultValues:defaultValues
+        defaultValues:dataProps
 
     })
-    
-   
+
+
+
     const fields = {
         "name": {label: " Họ và Tên ",
         },
         "phone":{label:" Số ĐT",},
-        "diachi":{ label: " Địa Chỉ " ,values:["Hà Nội" , "HCM", "Thanh Hoa",] , isSelectBox:true ,
+        "diachi":{ label: " Địa Chỉ " ,values:["Hà Nội" , "HCM", "Thanh Hoa","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1",] , isSelectBox:true ,
         },
         "vietnam":{isCheckBox:true, title : " người việt " ,
         },
-        "male":{isRadio: true, values:['nam', "nữ"]}
+        "male":{isRadio: true, values:['nam', "nữ"],
+        },
+        sothich:{isMultipleSelect:true,
+            selectText: "So thich" , // default : "Pick Items"
+            values:[{id:"1", value:'code'},{id:"2",value:'xem phim'},{id:"3",value:'doc sach'}],
+            displayKey:"value" , // default : value
+            uniqueKey:"id" // default : id
+        }
     }
 
     const onSubmit = data => {
@@ -84,14 +92,14 @@ export default function App() {
     return (
         <View style={styles.container}>
 
-            <View>
+            <ScrollView>
                 {renderFields(fields, medthods)}
                 <Button onPress={medthods.handleSubmit(onSubmit)} title={'submit'}/>
-            </View>
+            </ScrollView>
             <View>
                 <Text>
                     {data ? JSON.stringify(data, null, 2) : null}
-                </Text>
+          </Text>
             </View>
         </View>
     );
@@ -103,13 +111,13 @@ const styles = StyleSheet.create({
     },
 });
 
-
 ```
 # API
 
 + isSelectBox (bool): `render box lựa chọn các giá trị của trường values`
 + isCheckBox (bool): `render check box`
 + isRaido (bool) : `render radio group các giá trị của trường values`
++ isMultipleSelect : `render box lựa chọn các giá trị trong trường values với nhiều lựa chon`
 
 ## Xem thêm react-hook-form tại https://github.com/react-hook-form/react-hook-form
 ## License
