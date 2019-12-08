@@ -1,6 +1,6 @@
 import {HelperText, TextInput} from 'react-native-paper'
 import {View} from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Dropdown} from 'react-native-material-dropdown'
 import {CheckBox} from 'react-native-elements'
 import {
@@ -162,6 +162,9 @@ function MultipeSelect({name, attributes, methods, value}) {
     const [selected, setSelected] = useState(isArray(value[name]) ? getMultiselect(value[name], items, uniqueKey) : [])
     const ref = React.useRef(register({name}))
 
+    useEffect(() => {
+        setValue(name, getSelectedItemsExt(selected, items, uniqueKey))
+    }, [])
     return (
         <View key={name}>
             <MultiSelect
