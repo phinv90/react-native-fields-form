@@ -35,6 +35,8 @@ import {renderFields} from "react-native-fields-form";
 import * as yup from 'yup'
 
 export default function App() {
+
+    const [data, setData] = useState(null)
     const validator = yup.object().shape({
         name: yup.string()
             .required("bắt buộc nhập ")
@@ -61,21 +63,17 @@ export default function App() {
         defaultValues:defaultValues
 
     })
-    const [data, setData] = useState(null)
-    const [isVietnam, setIsVietNam] = useState(true)
-    const [male, setMale] = useState("nam")
-
+    
+   
     const fields = {
         "name": {label: " Họ và Tên ",
-            // value: name, onChangeText: setName
         },
         "phone":{label:" Số ĐT",},
         "diachi":{ label: " Địa Chỉ " ,values:["Hà Nội" , "HCM", "Thanh Hoa",] , isSelectBox:true ,
         },
         "vietnam":{isCheckBox:true, title : " người việt " ,
-            checked:isVietnam, onPress : setIsVietNam
         },
-        "male":{isRadio: true, values:['nam', "nữ"], value: male, onChange:setMale}
+        "male":{isRadio: true, values:['nam', "nữ"]}
     }
 
     const onSubmit = data => {
