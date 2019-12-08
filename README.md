@@ -109,8 +109,7 @@ const styles = StyleSheet.create({
 
 + isSelectBox (bool): `render box lựa chọn các giá trị của trường values`
 + isCheckBox (bool): `render check box`
-  - checked (bool): `giá trị hiện tại checked or unchecked`
-  - onPress (func): `checked => {/* tác vụ với giá trị mới (checked)*/}`
++ isRaido (bool) : `render radio group các giá trị của trường values`
 
 ## Xem thêm react-hook-form tại https://github.com/react-hook-form/react-hook-form
 ## License
