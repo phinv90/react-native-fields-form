@@ -123,9 +123,6 @@ function RadioFields({name, attributes, methods, value}) {
             {values.map(val => {
                 return (
                     <View key={val}
-                          style={{
-                              flex: 'wrap'
-                          }}
                     >
                         <CheckBox
                             center
@@ -151,7 +148,6 @@ function RadioFields({name, attributes, methods, value}) {
                 {errors[name] ? errors[name].message : ''}
             </HelperText>
         </View>
-
     )
 }
 
