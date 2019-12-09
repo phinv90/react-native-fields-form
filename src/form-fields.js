@@ -36,20 +36,25 @@ function DefaultTextView({name, attributes, methods, value}) {
             <TextInput
                 mode={'outlined'}
                 dense={true}
-                {...attributes}
                 ref={register({name})}
+                {...attributes}
                 error={errors[name]}
                 onChangeText={(text) => {
                     setValue(name, text)
                 }}
                 defaultValue={value[name]}
             />
-            <HelperText
-                type="error"
-                visible={errors[name]}
-            >
-                {errors[name] ? errors[name].message : ''}
-            </HelperText>
+            {
+                errors[name] ?
+                    <HelperText
+                        type="error"
+                        visible={errors[name]}
+                    >
+                        {errors[name] ? errors[name].message : ''}
+                    </HelperText>
+                    : null
+            }
+
         </View>
     )
 }
@@ -66,19 +71,23 @@ function SelectBox({name, attributes, methods, value}) {
     return (
         <View key={name}>
             <Dropdown
-                itemCount={12}
+                // itemCount={12}
                 {...attributes}
                 value={value[name]}
                 data={data}
                 ref={React.createRef(register({name}))}
                 onChangeText={handleChange}
             />
-            <HelperText
-                type="error"
-                visible={errors[name]}
-            >
-                {errors[name] ? errors[name].message : ''}
-            </HelperText>
+            {
+                errors[name] ?
+                    <HelperText
+                        type="error"
+                        visible={errors[name]}
+                    >
+                        {errors[name] ? errors[name].message : ''}
+                    </HelperText>
+                    : null
+            }
         </View>
     )
 }
@@ -97,32 +106,36 @@ function CheckBoxFied({name, attributes, methods, value}) {
                           setChecked(!checked)
                       }}
             />
-            <HelperText
-                type="error"
-                visible={errors[name]}
-            >
-                {errors[name] ? errors[name].message : ''}
-            </HelperText>
+            {
+                errors[name] ?
+                    <HelperText
+                        type="error"
+                        visible={errors[name]}
+                    >
+                        {errors[name] ? errors[name].message : ''}
+                    </HelperText>
+                    : null
+            }
         </View>
     )
 }
 
 
 function RadioFields({name, attributes, methods, value}) {
-    const {values} = attributes
+    const {values, flexDirection} = attributes
     const {setValue, register, errors} = methods
     const [selected, setSelected] = useState(value[name])
 
     return (
         <View key={name}
               style={{
-                  // flex:'row',
-                  justifyContent: "center"
+                  flexDirection: flexDirection || 'column'
               }}
         >
             {values.map(val => {
                 return (
                     <View key={val}
+                          style={{flex: 1}}
                     >
                         <CheckBox
                             center
@@ -130,23 +143,30 @@ function RadioFields({name, attributes, methods, value}) {
                             ref={register({name})}
                             checkedIcon='dot-circle-o'
                             uncheckedIcon='circle-o'
+                            containerStyle={{
+                                backgroundColor: 'transparent',
+                                borderColor: 'transparent'
+                            }}
                             {...attributes}
                             checked={selected === val}
                             onPress={() => {
                                 setValue(name, val)
                                 setSelected(val)
                             }}
-                            containerStyle={{width: 100}}
                         />
                     </View>
                 )
             })}
-            <HelperText
-                type="error"
-                visible={errors[name]}
-            >
-                {errors[name] ? errors[name].message : ''}
-            </HelperText>
+            {
+                errors[name] ?
+                    <HelperText
+                        type="error"
+                        visible={errors[name]}
+                    >
+                        {errors[name] ? errors[name].message : ''}
+                    </HelperText>
+                    : null
+            }
         </View>
     )
 }
@@ -191,12 +211,16 @@ function MultipeSelect({name, attributes, methods, value}) {
             <View>
                 {ref.current ? ref.current.getSelectedItemsExt(selected) : null}
             </View>
-            <HelperText
-                type="error"
-                visible={errors[name]}
-            >
-                {errors[name] ? errors[name].message : ''}
-            </HelperText>
+            {
+                errors[name] ?
+                    <HelperText
+                        type="error"
+                        visible={errors[name]}
+                    >
+                        {errors[name] ? errors[name].message : ''}
+                    </HelperText>
+                    : null
+            }
         </View>
     )
 }

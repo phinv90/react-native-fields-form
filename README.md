@@ -75,6 +75,7 @@ export default function App() {
         "vietnam":{isCheckBox:true, title : " người việt " ,
         },
         "male":{isRadio: true, values:['nam', "nữ"],
+               flexDirection : 'row' // default : column
         },
         sothich:{isMultipleSelect:true,
             selectText: "So thich" , // default : "Pick Items"
