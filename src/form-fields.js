@@ -44,16 +44,13 @@ function DefaultTextView({name, attributes, methods, value}) {
                 }}
                 defaultValue={value[name]}
             />
-            {
-                errors[name] ?
-                    <HelperText
-                        type="error"
-                        visible={errors[name]}
-                    >
-                        {errors[name] ? errors[name].message : ''}
-                    </HelperText>
-                    : null
-            }
+
+            <HelperText
+                type="error"
+                visible={errors[name]}
+            >
+                {errors[name] ? errors[name].message : ''}
+            </HelperText>
 
         </View>
     )
@@ -72,22 +69,20 @@ function SelectBox({name, attributes, methods, value}) {
         <View key={name}>
             <Dropdown
                 // itemCount={12}
+                ref={React.createRef(register({name}))}
                 {...attributes}
                 value={value[name]}
                 data={data}
-                ref={React.createRef(register({name}))}
                 onChangeText={handleChange}
             />
-            {
-                errors[name] ?
-                    <HelperText
-                        type="error"
-                        visible={errors[name]}
-                    >
-                        {errors[name] ? errors[name].message : ''}
-                    </HelperText>
-                    : null
-            }
+
+            <HelperText
+                type="error"
+                visible={errors[name]}
+            >
+                {errors[name] ? errors[name].message : ''}
+            </HelperText>
+
         </View>
     )
 }
@@ -98,24 +93,24 @@ function CheckBoxFied({name, attributes, methods, value}) {
 
     return (
         <View key={name}>
-            <CheckBox {...attributes}
-                      checked={checked}
-                      ref={register({name})}
-                      onPress={() => {
-                          setValue(name, !checked)
-                          setChecked(!checked)
-                      }}
+            <CheckBox
+                ref={register({name})}
+                {...attributes}
+                checked={checked}
+
+                onPress={() => {
+                    setValue(name, !checked)
+                    setChecked(!checked)
+                }}
             />
-            {
-                errors[name] ?
-                    <HelperText
-                        type="error"
-                        visible={errors[name]}
-                    >
-                        {errors[name] ? errors[name].message : ''}
-                    </HelperText>
-                    : null
-            }
+
+            <HelperText
+                type="error"
+                visible={errors[name]}
+            >
+                {errors[name] ? errors[name].message : ''}
+            </HelperText>
+
         </View>
     )
 }
@@ -157,16 +152,14 @@ function RadioFields({name, attributes, methods, value}) {
                     </View>
                 )
             })}
-            {
-                errors[name] ?
-                    <HelperText
-                        type="error"
-                        visible={errors[name]}
-                    >
-                        {errors[name] ? errors[name].message : ''}
-                    </HelperText>
-                    : null
-            }
+
+            <HelperText
+                type="error"
+                visible={errors[name]}
+            >
+                {errors[name] ? errors[name].message : ''}
+            </HelperText>
+
         </View>
     )
 }
@@ -199,8 +192,8 @@ function MultipeSelect({name, attributes, methods, value}) {
                 searchInputStyle={{color: '#CCC'}}
                 submitButtonColor="#CCC"
                 submitButtonText=" Select "
-                {...attributes}
                 ref={ref}
+                {...attributes}
                 items={items}
                 selectedItems={selected}
                 onSelectedItemsChange={selectedItems => {
@@ -211,16 +204,14 @@ function MultipeSelect({name, attributes, methods, value}) {
             <View>
                 {ref.current ? ref.current.getSelectedItemsExt(selected) : null}
             </View>
-            {
-                errors[name] ?
-                    <HelperText
-                        type="error"
-                        visible={errors[name]}
-                    >
-                        {errors[name] ? errors[name].message : ''}
-                    </HelperText>
-                    : null
-            }
+
+            <HelperText
+                type="error"
+                visible={errors[name]}
+            >
+                {errors[name] ? errors[name].message : ''}
+            </HelperText>
+
         </View>
     )
 }
