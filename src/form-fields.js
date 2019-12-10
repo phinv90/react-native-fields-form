@@ -21,9 +21,9 @@ function renderFields(fields, methods) {
     return Object.keys(fields).map(f => {
         const attributes = fields[f]
         if (isSelectBox(attributes)) return SelectBox({name: f, attributes, methods, value})
-        if (isCheckBox(attributes)) return CheckBoxFied({name: f, attributes, methods, value})
+        if (isCheckBox(attributes)) return CheckBoxFields({name: f, attributes, methods, value})
         if (isRadio(attributes)) return RadioFields({name: f, attributes, methods, value})
-        if (isMultiSelect(attributes)) return MultipeSelect({name: f, attributes, methods, value})
+        if (isMultiSelect(attributes)) return MultipleSelect({name: f, attributes, methods, value})
         return DefaultTextView({name: f, attributes, methods, value})
     })
 }
@@ -87,7 +87,7 @@ function SelectBox({name, attributes, methods, value}) {
     )
 }
 
-function CheckBoxFied({name, attributes, methods, value}) {
+function CheckBoxFields({name, attributes, methods, value}) {
     const {setValue, register, errors} = methods
     const [checked, setChecked] = useState(Boolean(value[name]))
 
@@ -164,7 +164,7 @@ function RadioFields({name, attributes, methods, value}) {
     )
 }
 
-function MultipeSelect({name, attributes, methods, value}) {
+function MultipleSelect({name, attributes, methods, value}) {
     const {values, uniqueKey} = attributes
     const {register, setValue, errors} = methods
     const items = validateSelectItems(values, uniqueKey)
