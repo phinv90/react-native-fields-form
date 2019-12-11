@@ -63,7 +63,7 @@ function DefaultTextView({name, attributes, methods, value}) {
 
 function SelectBox({name, attributes, methods, value}) {
     const {register, setValue, errors} = methods
-    const {values = [], displayKey = 'value'} = attributes
+    const {values = [], displayKey = 'label', valueKey = 'value'} = attributes
 
     const handleChange = (value, index, data) => {
         setValue(name, data[index], true)
@@ -77,11 +77,13 @@ function SelectBox({name, attributes, methods, value}) {
             <Dropdown
                 // itemCount={12}
                 ref={React.createRef(register({name}))}
+                valueExtractor={(item) => item[valueKey]}
+                labelExtractor={(item) => item[displayKey]}
                 {...attributes}
-                value={isObject(value[name]) ? value[name][displayKey] : ''}
+                value={isObject(value[name]) ? value[name][valueKey] : ''}
                 data={values}
                 onChangeText={handleChange}
-                valueExtractor={(item) => item[displayKey]}
+
             />
 
             <HelperText

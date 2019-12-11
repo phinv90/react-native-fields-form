@@ -51,7 +51,7 @@ export default function App() {
     const dataProps = {
         email:"phi@classfunc.com",
         name:"phi nguyen",
-        diachi:{name:"HCM"},
+        diachi:{value:3},
         vietnam:true,
         // male:"nam",
         // sothich:[{id:"1",value:'code'}]
@@ -71,8 +71,9 @@ export default function App() {
             onChangeValue : value =>console.log(value)
         },
         "phone":{label:" Số ĐT",},
-        "diachi":{ label: " Địa Chỉ " ,values:[{id:1,name:"Hà Nội" }, {id:2,name:"HCM"}, {id:3,name: "Thanh Hoa"}] , isSelectBox:true ,
-            displayKey:"name" , // default : value,
+        "diachi":{ label: " Địa Chỉ " ,values:[{value:1,label:"Hà Nội" }, {value:2,label:"HCM"}, {value:3,label: "Thanh Hoa"}] , isSelectBox:true ,
+            displayKey:"label" , // default : label,
+            valueKey:'value' , //default ": value
             onChangeValue : value =>console.log(value)
         },
         "vietnam":{isCheckBox:true, title : " người việt " ,
@@ -84,7 +85,8 @@ export default function App() {
             selectText: "So thich" , // default : "Pick Items"
             values:[{id:"1", value:'code'},{id:"2",value:'xem phim'},{id:"3",value:'doc sach'}],
             displayKey:"value" , // default : value
-            uniqueKey:"id" // default : id
+            uniqueKey:"id" // default : id,
+           
         }
     }
 
@@ -122,6 +124,8 @@ const styles = StyleSheet.create({
 # API
 
 + isSelectBox (bool): `render box lựa chọn các giá trị của trường values`
+  -  labelExtractor : func args (item) : ({ label }) => label
+  -  valueExtractor : func args (item) : ({ value }) => value
 + isCheckBox (bool): `render check box`
 + isRaido (bool) : `render radio group các giá trị của trường values`
 + isMultipleSelect : `render box lựa chọn các giá trị trong trường values với nhiều lựa chon`
