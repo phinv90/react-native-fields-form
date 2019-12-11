@@ -62,15 +62,19 @@ function DefaultTextView({name, attributes, methods, value}) {
 }
 
 function SelectBox({name, attributes, methods, value}) {
-    const {register, setValue, errors} = methods
+    const {register, setValue, errors, getValues} = methods
     const {values = [], displayKey = 'label', valueKey = 'value'} = attributes
-
+    const [val, setVal] = useState('')
     const handleChange = (value, index, data) => {
         setValue(name, data[index], true)
         if (isFunction(attributes.onChangeValue)) {
             attributes.onChangeValue(data[index])
         }
     }
+    const valueChange = methods.watch(name)
+    useEffect(() => {
+        setVal(isObject(valueChange) ? valueChange[valueKey] : '')
+    }, [valueChange])
 
     return (
         <View key={name}>
@@ -80,7 +84,7 @@ function SelectBox({name, attributes, methods, value}) {
                 valueExtractor={(item) => item[valueKey]}
                 labelExtractor={(item) => item[displayKey]}
                 {...attributes}
-                value={isObject(value[name]) ? value[name][valueKey] : ''}
+                value={val}
                 data={values}
                 onChangeText={handleChange}
 
