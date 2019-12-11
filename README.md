@@ -3,7 +3,7 @@
 >
 
 [![NPM](https://img.shields.io/npm/v/react-native-fields-form.svg)](https://www.npmjs.com/package/react-native-fields-form) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-![Ví dụ](https://firebasestorage.googleapis.com/v0/b/saga-dd0c2.appspot.com/o/images%2FA%CC%89nh%20chu%CC%A3p%20Ma%CC%80n%20hi%CC%80nh%202019-12-07%20lu%CC%81c%208.40.19%20CH.png?alt=media&token=249d8fca-565a-43c0-b862-2bb6bd2fc19b "Ví dụ")
+![Ví dụ](https://firebasestorage.googleapis.com/v0/b/saga-dd0c2.appspot.com/o/images%2FASDKxbSjnLg5Y6orOqgVwIX2hKf2%2FA%CC%89nh%20chu%CC%A3p%20Ma%CC%80n%20hi%CC%80nh%202019-12-11%20lu%CC%81c%202.59.42%20CH.png?alt=media&token=ce45b12d-8933-44b2-ac83-58b19e4b0a8a "Ví dụ")
 
 ## Install
 
@@ -35,26 +35,26 @@ export default function App() {
         name: yup.string()
             .required("bắt buộc nhập ")
             .min(6, "tối thiểu 6 ký tự"),
-        diachi: yup
-            .string()
-            .required(),
+        // diachi: yup
+        //     .string()
+        //     .required(),
         // phone: yup.number()
             // .required()
             // .min(9),
-        male: yup.string()
-            .required(),
-        sothich:yup
-            .array()
-            .required()
+        // gender: yup.string()
+        //     .required(),
+        // sothich:yup
+        //     .array()
+        //     .required()
 
     })
     const dataProps = {
         email:"phi@classfunc.com",
         name:"phi nguyen",
-        // diachi:"HCM",
+        diachi:{name:"HCM"},
         vietnam:true,
         // male:"nam",
-        sothich:[{id:"1",value:'code'}]
+        // sothich:[{id:"1",value:'code'}]
     }
 
 
@@ -68,15 +68,17 @@ export default function App() {
 
     const fields = {
         "name": {label: " Họ và Tên ",
-             onchangeValue : value =>console.log(value) // trigger khi thay đổi value
+            onChangeValue : value =>console.log(value)
         },
         "phone":{label:" Số ĐT",},
-        "diachi":{ label: " Địa Chỉ " ,values:["Hà Nội" , "HCM", "Thanh Hoa","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1",] , isSelectBox:true ,
+        "diachi":{ label: " Địa Chỉ " ,values:[{id:1,name:"Hà Nội" }, {id:2,name:"HCM"}, {id:3,name: "Thanh Hoa"}] , isSelectBox:true ,
+            displayKey:"name" , // default : value,
+            onChangeValue : value =>console.log(value)
         },
         "vietnam":{isCheckBox:true, title : " người việt " ,
         },
-        "male":{isRadio: true, values:['nam', "nữ"],
-               flexDirection : 'row' // default : column
+        "gender":{isRadio: true, values:['nam', "nữ","khác"],
+            flexDirection:'row'
         },
         sothich:{isMultipleSelect:true,
             selectText: "So thich" , // default : "Pick Items"
@@ -94,22 +96,25 @@ export default function App() {
     return (
         <View style={styles.container}>
 
-            <ScrollView>
+            <ScrollView style={{
+                // flex:1
+            }}>
                 {renderFields(fields, medthods)}
                 <Button onPress={medthods.handleSubmit(onSubmit)} title={'submit'}/>
+                <View>
+                    <Text>
+                        {data ? JSON.stringify(data, null, 2) : null}
+                    </Text>
+                </View>
             </ScrollView>
-            <View>
-                <Text>
-                    {data ? JSON.stringify(data, null, 2) : null}
-          </Text>
-            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        margin: 70
+        marginTop: 70,
+        // flex:1
     },
 });
 

@@ -15,6 +15,7 @@ import {
 import MultiSelect from 'react-native-multiple-select'
 import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
+import isObject from 'lodash/isObject'
 
 function renderFields(fields, methods) {
     const {getValues} = methods
@@ -42,8 +43,8 @@ function DefaultTextView({name, attributes, methods, value}) {
                 error={errors[name]}
                 onChangeText={(text) => {
                     setValue(name, text)
-                    if (isFunction(attributes.onchangeValue)) {
-                        attributes.onchangeValue(text)
+                    if (isFunction(attributes.onChangeValue)) {
+                        attributes.onChangeValue(text)
                     }
                 }}
                 defaultValue={value[name]}
@@ -62,13 +63,12 @@ function DefaultTextView({name, attributes, methods, value}) {
 
 function SelectBox({name, attributes, methods, value}) {
     const {register, setValue, errors} = methods
-    const {values} = attributes
-    const data = values.map(val => ({value: `${val}`}))
+    const {values = [], displayKey = 'value'} = attributes
 
-    const handleChange = value => {
-        setValue(name, value, true)
-        if (isFunction(attributes.onchangeValue)) {
-            attributes.onchangeValue(value)
+    const handleChange = (value, index, data) => {
+        setValue(name, data[index], true)
+        if (isFunction(attributes.onChangeValue)) {
+            attributes.onChangeValue(data[index])
         }
     }
 
@@ -78,9 +78,10 @@ function SelectBox({name, attributes, methods, value}) {
                 // itemCount={12}
                 ref={React.createRef(register({name}))}
                 {...attributes}
-                value={value[name]}
-                data={data}
+                value={isObject(value[name]) ? value[name][displayKey] : ''}
+                data={values}
                 onChangeText={handleChange}
+                valueExtractor={(item) => item[displayKey]}
             />
 
             <HelperText
@@ -108,8 +109,8 @@ function CheckBoxFields({name, attributes, methods, value}) {
                 onPress={() => {
                     setValue(name, !checked)
                     setChecked(!checked)
-                    if (isFunction(attributes.onchangeValue)) {
-                        attributes.onchangeValue(!checked)
+                    if (isFunction(attributes.onChangeValue)) {
+                        attributes.onChangeValue(!checked)
                     }
                 }}
             />
@@ -157,8 +158,8 @@ function RadioFields({name, attributes, methods, value}) {
                             onPress={() => {
                                 setValue(name, val)
                                 setSelected(val)
-                                if (isFunction(attributes.onchangeValue)) {
-                                    attributes.onchangeValue(val)
+                                if (isFunction(attributes.onChangeValue)) {
+                                    attributes.onChangeValue(val)
                                 }
                             }}
                         />
@@ -213,8 +214,8 @@ function MultipleSelect({name, attributes, methods, value}) {
                     setSelected(selectedItems)
                     const nextValue = getSelectedItemsExt(selectedItems, items, uniqueKey)
                     setValue(name, nextValue)
-                    if (isFunction(attributes.onchangeValue)) {
-                        attributes.onchangeValue(nextValue)
+                    if (isFunction(attributes.onChangeValue)) {
+                        attributes.onChangeValue(nextValue)
                     }
                 }}
             />

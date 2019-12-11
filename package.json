@@ -1,6 +1,6 @@
 {
   "name": "react-native-fields-form",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "react native render fields form",
   "main": "index.js",
   "scripts": {
