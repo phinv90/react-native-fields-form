@@ -14,6 +14,7 @@ import {
 } from "./helpers";
 import MultiSelect from 'react-native-multiple-select'
 import isArray from 'lodash/isArray'
+import isFunction from 'lodash/isFunction'
 
 function renderFields(fields, methods) {
     const {getValues} = methods
@@ -41,6 +42,9 @@ function DefaultTextView({name, attributes, methods, value}) {
                 error={errors[name]}
                 onChangeText={(text) => {
                     setValue(name, text)
+                    if (isFunction(attributes.onchangeValue)) {
+                        attributes.onchangeValue(text)
+                    }
                 }}
                 defaultValue={value[name]}
             />
@@ -63,6 +67,9 @@ function SelectBox({name, attributes, methods, value}) {
 
     const handleChange = value => {
         setValue(name, value, true)
+        if (isFunction(attributes.onchangeValue)) {
+            attributes.onchangeValue(value)
+        }
     }
 
     return (
@@ -101,6 +108,9 @@ function CheckBoxFields({name, attributes, methods, value}) {
                 onPress={() => {
                     setValue(name, !checked)
                     setChecked(!checked)
+                    if (isFunction(attributes.onchangeValue)) {
+                        attributes.onchangeValue(!checked)
+                    }
                 }}
             />
 
@@ -147,6 +157,9 @@ function RadioFields({name, attributes, methods, value}) {
                             onPress={() => {
                                 setValue(name, val)
                                 setSelected(val)
+                                if (isFunction(attributes.onchangeValue)) {
+                                    attributes.onchangeValue(val)
+                                }
                             }}
                         />
                     </View>
@@ -198,7 +211,11 @@ function MultipleSelect({name, attributes, methods, value}) {
                 selectedItems={selected}
                 onSelectedItemsChange={selectedItems => {
                     setSelected(selectedItems)
-                    setValue(name, getSelectedItemsExt(selectedItems, items, uniqueKey))
+                    const nextValue = getSelectedItemsExt(selectedItems, items, uniqueKey)
+                    setValue(name, nextValue)
+                    if (isFunction(attributes.onchangeValue)) {
+                        attributes.onchangeValue(nextValue)
+                    }
                 }}
             />
             <View>

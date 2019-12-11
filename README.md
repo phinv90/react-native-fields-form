@@ -68,6 +68,7 @@ export default function App() {
 
     const fields = {
         "name": {label: " Họ và Tên ",
+             onchangeValue : value =>console.log(value) // trigger khi thay đổi value
         },
         "phone":{label:" Số ĐT",},
         "diachi":{ label: " Địa Chỉ " ,values:["Hà Nội" , "HCM", "Thanh Hoa","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1",] , isSelectBox:true ,
