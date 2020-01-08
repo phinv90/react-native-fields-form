@@ -64,7 +64,7 @@ function DefaultTextView({name, attributes, methods, value}) {
 
 function SelectBox({name, attributes, methods,}) {
     const {register, setValue, errors} = methods
-    const {values = [], displayKey = 'label', valueKey = 'value', value} = attributes
+    const {values = [], displayKey = 'label', valueKey = 'value', value, label} = attributes
 
     const formatedValues = values.map(v => {
         return {
@@ -83,7 +83,7 @@ function SelectBox({name, attributes, methods,}) {
                 render={props => <RNPickerSelect
                     {...props}
                     placeholder={{
-                        label: name,
+                        label: label,
                         value: null,
                         color: 'red',
                     }}
