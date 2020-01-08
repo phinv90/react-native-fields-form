@@ -30,7 +30,7 @@ renderFields(settings, methods)
 ```jsx
 export default function App() {
     const [data, setData] = useState(null)
-
+    const [diachi, setDiaChi] = useState('')
     const validator = yup.object().shape({
         name: yup.string()
             .required("bắt buộc nhập ")
@@ -73,8 +73,9 @@ export default function App() {
         "phone":{label:" Số ĐT",},
         "diachi":{ label: " Địa Chỉ " ,values:[{value:1,label:"Hà Nội" }, {value:2,label:"HCM"}, {value:3,label: "Thanh Hoa"}] , isSelectBox:true ,
             displayKey:"label" , // default : label,
-            valueKey:'value' , //default ": value
-            onChangeValue : value =>console.log(value)
+            valueKey:'value' , //default ": value,
+            value:diachi,
+            onChangeValue : value =>setDiaChi(value)
         },
         "vietnam":{isCheckBox:true, title : " người việt " ,
         },

@@ -40,6 +40,15 @@ export function getSelectedItemsExt(selected = [], items = [], uniqueKey = "id")
     return filter(SelectExt, s => s)
 }
 
+export function getSelectedItemExt(selected = '', items = [], uniqueKey = "id") {
+    if (!selected)
+        return null
+    let idx = findIndex(items, {[uniqueKey]: selected})
+    if (idx !== -1)
+        return items[idx]
+    return null
+}
+
 export function validateSelectItems(items, uniqueKey = "id") {
     if (!isArray(items))
         return []

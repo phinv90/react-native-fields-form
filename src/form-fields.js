@@ -1,10 +1,10 @@
 import {HelperText, TextInput} from 'react-native-paper'
-import {View} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import React, {useEffect, useState} from 'react'
-import {Dropdown} from 'react-native-material-dropdown'
 import {CheckBox} from 'react-native-elements'
 import {
     getMultiselect,
+    getSelectedItemExt,
     getSelectedItemsExt,
     isCheckBox,
     isMultiSelect,
@@ -16,6 +16,7 @@ import MultiSelect from 'react-native-multiple-select'
 import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
 import isObject from 'lodash/isObject'
+import RNPickerSelect from 'react-native-picker-select';
 
 function renderFields(fields, methods) {
     const {getValues} = methods
@@ -61,33 +62,44 @@ function DefaultTextView({name, attributes, methods, value}) {
     )
 }
 
-function SelectBox({name, attributes, methods, value}) {
-    const {register, setValue, errors, getValues} = methods
-    const {values = [], displayKey = 'label', valueKey = 'value'} = attributes
-    const [val, setVal] = useState('')
-    const handleChange = (value, index, data) => {
-        setValue(name, data[index], true)
-        if (isFunction(attributes.onChangeValue)) {
-            attributes.onChangeValue(data[index])
-        }
-    }
-    const valueChange = methods.watch(name)
-    useEffect(() => {
-        setVal(isObject(valueChange) ? valueChange[valueKey] : '')
-    }, [valueChange])
+function SelectBox({name, attributes, methods,}) {
+    const {register, setValue, errors} = methods
+    const {values = [], displayKey = 'label', valueKey = 'value', value} = attributes
 
+    const formatedValues = values.map(v => {
+        return {
+            ...v,
+            "label": v[displayKey],
+            value: v[valueKey]
+        }
+    })
     return (
         <View key={name}>
-            <Dropdown
-                // itemCount={12}
-                ref={React.createRef(register({name}))}
-                valueExtractor={(item) => item[valueKey]}
-                labelExtractor={(item) => item[displayKey]}
-                {...attributes}
-                value={val}
-                data={values}
-                onChangeText={handleChange}
-
+            <TextInput
+                style={styles.input}
+                mode="outlined"
+                ref={register({name})}
+                value={(value && isObject(value)) ? value[valueKey] : value}
+                render={props => <RNPickerSelect
+                    {...props}
+                    placeholder={{
+                        label: name,
+                        value: null,
+                        color: 'red',
+                    }}
+                    style={{
+                        ...pickerSelectStyles,
+                    }}
+                    onValueChange={(value) => {
+                        const nextValue = getSelectedItemExt(value, formatedValues, valueKey)
+                        setValue(name, nextValue)
+                        if (attributes.onChangeValue && isFunction(attributes.onChangeValue)) {
+                            attributes.onChangeValue(nextValue)
+                        }
+                    }}
+                    items={formatedValues}
+                />
+                }
             />
 
             <HelperText
@@ -240,4 +252,37 @@ function MultipleSelect({name, attributes, methods, value}) {
     )
 }
 
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+        fontSize: 16,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        // borderWidth: 1,
+        // borderColor: 'gray',
+        // borderRadius: 4,
+        color: 'black',
+        paddingRight: 30, // to ensure the text is never behind the icon
+        height: 55
+    },
+    inputAndroid: {
+        fontSize: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        // borderWidth: 0.5,
+        // borderColor: 'purple',
+        // borderRadius: 8,
+        color: 'black',
+        paddingRight: 30, // to ensure the text is never behind the icon
+    },
+});
+const styles = StyleSheet.create({
+    input: {
+        marginTop: 5,
+        marginBottom: 5,
+        flexGrow: 1,
+    },
+    container: {
+        flex: 1
+    },
+});
 export default renderFields

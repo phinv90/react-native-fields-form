@@ -13,7 +13,8 @@
   "author": "phi@classfunc.com",
   "license": "MIT",
   "dependencies": {
-    "react-native-multiple-select": "^0.5.5"
+    "react-native-multiple-select": "^0.5.5",
+    "react-native-picker-select": "^6.3.3"
   },
   "devDependencies": {
     "metro-react-native-babel-preset": "^0.57.0"
