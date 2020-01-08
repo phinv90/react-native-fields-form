@@ -79,6 +79,7 @@ function SelectBox({name, attributes, methods,}) {
                 style={styles.input}
                 mode="outlined"
                 ref={register({name})}
+                label={value ? label : ''}
                 value={(value && isObject(value)) ? value[valueKey] : value}
                 render={props => <RNPickerSelect
                     {...props}
