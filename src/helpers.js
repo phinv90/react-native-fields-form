@@ -12,8 +12,16 @@ export function isRadio(attributes) {
     return Boolean(attributes.isRadio)
 }
 
+export function isShowHidePassword(attributes) {
+    return Boolean(attributes.isShowHidePassword)
+}
+
 export function isMultiSelect(attributes) {
     return Boolean(attributes.isMultipleSelect)
+}
+
+export function isShowHideConfirmPassword(attributes) {
+    return Boolean(attributes.isShowHideConfirmPassword)
 }
 
 export function getMultiselect(selected = [], items = [], uniqueKey = "id") {
