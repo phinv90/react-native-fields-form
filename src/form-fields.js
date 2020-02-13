@@ -10,6 +10,8 @@ import {
     isMultiSelect,
     isRadio,
     isSelectBox,
+    isShowHideConfirmPassword,
+    isShowHidePassword,
     validateSelectItems
 } from "./helpers";
 import MultiSelect from 'react-native-multiple-select'
@@ -17,6 +19,7 @@ import isArray from 'lodash/isArray'
 import isFunction from 'lodash/isFunction'
 import isObject from 'lodash/isObject'
 import RNPickerSelect from 'react-native-picker-select';
+import PasswordInputText from "react-native-hide-show-password-input";
 
 function renderFields(fields, methods) {
     const {getValues} = methods
@@ -27,6 +30,8 @@ function renderFields(fields, methods) {
         if (isCheckBox(attributes)) return CheckBoxFields({name: f, attributes, methods, value})
         if (isRadio(attributes)) return RadioFields({name: f, attributes, methods, value})
         if (isMultiSelect(attributes)) return MultipleSelect({name: f, attributes, methods, value})
+        if (isShowHidePassword(attributes)) return ShowHidePassword({name: f, attributes, methods, value})
+        if (isShowHideConfirmPassword(attributes)) return ShowHideConfirmPassword({name: f, attributes, methods, value})
         return DefaultTextView({name: f, attributes, methods, value})
     })
 }
@@ -49,6 +54,68 @@ function DefaultTextView({name, attributes, methods, value}) {
                     }
                 }}
                 defaultValue={value[name]}
+            />
+
+            <HelperText
+                type="error"
+                visible={errors[name]}
+            >
+                {errors[name] ? errors[name].message : ''}
+            </HelperText>
+
+        </View>
+    )
+}
+
+function ShowHidePassword({name, attributes, methods, value}) {
+    const {register, setValue, errors} = methods
+
+    return (
+        <View key={name}>
+            <PasswordInputText
+                iconSize={25}
+                ref={register({name})}
+                {...attributes}
+                error={errors[name]}
+                label={'Mật khẩu'}
+                onChangeText={(text) => {
+                    setValue(name, text)
+                    if (isFunction(attributes.onChangeValue)) {
+                        attributes.onChangeValue(text)
+                    }
+                }}
+                defaultValue={value[name]}
+            />
+
+            <HelperText
+                type="error"
+                visible={errors[name]}
+            >
+                {errors[name] ? errors[name].message : ''}
+            </HelperText>
+
+        </View>
+    )
+}
+
+function ShowHideConfirmPassword({name, attributes, methods, value}) {
+    const {register, setValue, errors} = methods
+
+    return (
+        <View key={name}>
+            <PasswordInputText
+                iconSize={25}
+                ref={register({name})}
+                {...attributes}
+                error={errors[name]}
+                onChangeText={(text) => {
+                    setValue(name, text)
+                    if (isFunction(attributes.onChangeValue)) {
+                        attributes.onChangeValue(text)
+                    }
+                }}
+                defaultValue={value[name]}
+                label={'Nhập lại mật khẩu'}
             />
 
             <HelperText
